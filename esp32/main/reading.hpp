@@ -13,6 +13,6 @@ class Reading
 
     private:
         uint8_t mask_;
-        int64_t accepted_timestamp_;
         bool fresh_;
+        int64_t accepted_timestamp_;
 };
