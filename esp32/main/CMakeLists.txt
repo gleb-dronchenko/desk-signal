@@ -1,0 +1,1 @@
+idf_component_register(SRCS "main.cpp" "reading.cpp" "lock.cpp" INCLUDE_DIRS ".")
