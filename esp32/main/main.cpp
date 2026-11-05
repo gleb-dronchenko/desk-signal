@@ -1,13 +1,15 @@
 #include "buttons.hpp"
 #include "http_state.hpp"
-#include "reading.hpp"
-#include "freertos/FreeRTOS.h"
-#include "freertos/semphr.h"
+#include "shared_reading.hpp"
 
-extern "C" void app_main(void) {
+extern "C" void app_main(void)
+{
     static Reading reading;
-    SemaphoreHandle_t mutex = xSemaphoreCreateMutex();
-    
-    StartButtons(&reading, mutex);
-    StartNetwork(&reading, mutex);
+    static SharedReading shared;
+
+    shared.reading = &reading;
+    shared.mutex = xSemaphoreCreateMutex();
+
+    StartButtons(&shared);
+    StartNetwork(&shared);
 }

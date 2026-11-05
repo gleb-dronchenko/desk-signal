@@ -11,6 +11,9 @@ class Lock
 
         Lock(const Lock &) = delete;
         Lock &operator=(const Lock &) = delete;
+        Lock(Lock &&) = delete;
+        Lock &operator=(Lock &&) = delete;
+
     private:
         SemaphoreHandle_t mutex_;
 };

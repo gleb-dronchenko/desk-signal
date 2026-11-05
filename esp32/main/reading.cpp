@@ -1,24 +1,18 @@
 #include "reading.hpp"
 
-Reading::Reading()
-    // constructor initializes the mask, fresh, and accepted timestamp props
-    : mask_(0), fresh_(false), accepted_timestamp_(0)
-{}
-
-
-void Reading::Accept(uint8_t mask, int64_t timestamp)
+void Reading::Accept(uint8_t mask, int64_t now_us)
 {
     mask_ = mask;
     fresh_ = true;
-    accepted_timestamp_ = timestamp;
+    accepted_us_ = now_us;
 }
 
-void Reading::Expire(int64_t timestamp)
+void Reading::Expire(int64_t now_us)
 {
     if (!fresh_)
         return;
 
-    if (timestamp - accepted_timestamp_ >= 500000)
+    if (now_us - accepted_us_ >= 500000)
         fresh_ = false;
 }
 

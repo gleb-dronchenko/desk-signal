@@ -1,7 +1,5 @@
 #pragma once
 
-#include "reading.hpp"
-#include "freertos/FreeRTOS.h"
-#include "freertos/semphr.h"
+#include "shared_reading.hpp"
 
-void StartNetwork(Reading *reading, SemaphoreHandle_t mutex);
+void StartNetwork(SharedReading *shared);
