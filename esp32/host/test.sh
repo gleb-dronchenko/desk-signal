@@ -12,5 +12,7 @@ compile() {
 }
 
 compile reading_test "$root/esp32/main/reading.cpp"
+compile state_body_test "$root/esp32/main/state_body.cpp"
 
 /tmp/reading_test
+/tmp/state_body_test

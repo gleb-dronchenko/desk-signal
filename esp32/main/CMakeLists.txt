@@ -4,6 +4,7 @@ idf_component_register(
         "reading.cpp" 
         "lock.cpp" 
         "buttons.cpp" 
+        "state_body.cpp"
         "http_state.cpp" 
     INCLUDE_DIRS "." 
     PRIV_REQUIRES 

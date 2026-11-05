@@ -1,5 +1,6 @@
 #include "http_state.hpp"
 #include "lock.hpp"
+#include "state_body.hpp"
 #include "wifi_secret.h"
 
 #include "esp_event.h"
@@ -11,8 +12,6 @@
 #include "freertos/event_groups.h"
 #include "freertos/task.h"
 #include "nvs_flash.h"
-
-#include <cstdio>
 
 struct StatePair
 {
@@ -127,24 +126,6 @@ static void ReadState(const StatePair *pair, uint8_t *mask, bool *fresh)
     pair->reading->Copy(mask, fresh);
 }
 
-static const char *JsonBool(bool value)
-{
-    return value ? "true" : "false";
-}
-
-static int WriteState(char *body, size_t size, uint8_t mask, bool fresh)
-{
-    return snprintf(
-        body,
-        size,
-        "{\"forward\":%s,\"back\":%s,\"left\":%s,\"right\":%s,\"fresh\":%s}",
-        JsonBool((mask & 1) != 0),
-        JsonBool((mask & 2) != 0),
-        JsonBool((mask & 4) != 0),
-        JsonBool((mask & 8) != 0),
-        JsonBool(fresh));
-}
-
 extern "C" esp_err_t StateGet(httpd_req_t *req)
 {
     StatePair *pair = static_cast<StatePair *>(req->user_ctx);
@@ -154,7 +135,7 @@ extern "C" esp_err_t StateGet(httpd_req_t *req)
     ReadState(pair, &mask, &fresh);
 
     char body[80];
-    int length = WriteState(body, sizeof(body), mask, fresh);
+    int length = WriteStateBody(body, sizeof(body), mask, fresh);
 
     httpd_resp_set_type(req, "application/json");
     httpd_resp_send(req, body, length);
