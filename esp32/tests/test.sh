@@ -7,7 +7,7 @@ compile() {
   name=$1
   shift
   clang++ -Wall -Wextra -Werror -I "$root/esp32/main" -o "/tmp/$name" \
-    "$root/esp32/host/${name}.cpp" \
+    "$root/esp32/tests/${name}.cpp" \
     "$@"
 }
 

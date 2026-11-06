@@ -19,10 +19,10 @@ cp esp32/main/wifi_secret.h.example esp32/main/wifi_secret.h
 
 Fill in `wifi_ssid` and `wifi_password` in the copy.
 
-Run the host tests from the repository root:
+Run the tests from the repository root:
 
 ```bash
-esp32/host/test.sh
+esp32/tests/test.sh
 ```
 
 Success is the line `Test passed` and exit code 0.
