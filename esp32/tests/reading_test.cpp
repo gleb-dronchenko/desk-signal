@@ -13,6 +13,7 @@ int main()
     if (mask != 0 || fresh)
     {
         printf("Test failed\n");
+
         return 1;
     }
 
@@ -22,6 +23,7 @@ int main()
     if (mask != 0 || fresh)
     {
         printf("Test failed\n");
+
         return 1;
     }
 
@@ -31,6 +33,7 @@ int main()
     if (mask != 5 || !fresh)
     {
         printf("Test failed\n");
+
         return 1;
     }
 
@@ -40,6 +43,7 @@ int main()
     if (mask != 5 || !fresh)
     {
         printf("Test failed\n");
+
         return 1;
     }
 
@@ -49,6 +53,7 @@ int main()
     if (mask != 5 || fresh)
     {
         printf("Test failed\n");
+
         return 1;
     }
 
@@ -58,6 +63,7 @@ int main()
     if (mask != 5 || fresh)
     {
         printf("Test failed\n");
+
         return 1;
     }
 
@@ -67,6 +73,7 @@ int main()
     if (mask != 1 || !fresh)
     {
         printf("Test failed\n");
+
         return 1;
     }
 

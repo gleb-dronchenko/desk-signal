@@ -5,12 +5,14 @@
 #include "esp_timer.h"
 #include "freertos/task.h"
 
+// these are the pins and bits for the buttons.
 struct ButtonPin
 {
     gpio_num_t pin;
     uint8_t bit;
 };
 
+// these are the buttons and their bits.
 static constexpr ButtonPin kButtons[] = {
     {GPIO_NUM_16, Reading::kForwardBit},
     {GPIO_NUM_17, Reading::kBackBit},
@@ -18,6 +20,7 @@ static constexpr ButtonPin kButtons[] = {
     {GPIO_NUM_19, Reading::kRightBit},
 };
 
+// active-low: a high level leaves the LED dark, including before the first pass.
 static constexpr gpio_num_t kLedPin = GPIO_NUM_2;
 
 static uint64_t ButtonPinMask()
@@ -25,7 +28,9 @@ static uint64_t ButtonPinMask()
     uint64_t pins = 0;
 
     for (const ButtonPin &button : kButtons)
+    {
         pins |= (1ULL << button.pin);
+    }
 
     return pins;
 }
@@ -36,8 +41,11 @@ static uint8_t ReadMask()
 
     for (const ButtonPin &button : kButtons)
     {
+        // the pin is pulled up and a press shorts it to ground, so held reads as 0.
         if (gpio_get_level(button.pin) == 0)
+        {
             mask |= button.bit;
+        }
     }
 
     return mask;
@@ -72,13 +80,17 @@ extern "C" void ButtonsTask(void *arg)
     for (;;)
     {
         uint8_t mask = ReadMask();
+
+        // while any button is held, the LED is lit.
         gpio_set_level(kLedPin, mask == 0 ? 1 : 0);
 
+        // the pin read and the LED do not use the shared reading, so they stay outside the lock.
         {
             Lock lock(shared->mutex);
             shared->reading->Accept(mask, esp_timer_get_time());
         }
 
+        // a 50 ms period is under the 500 ms freshness window, so a live task stays fresh.
         vTaskDelay(pdMS_TO_TICKS(50));
     }
 }

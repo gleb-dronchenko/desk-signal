@@ -4,6 +4,7 @@
 
 extern "C" void app_main(void)
 {
+    // the Reading object is not heap-allocated. The mutex is the only object taken from the heap.
     static Reading reading;
     static SharedReading shared;
 

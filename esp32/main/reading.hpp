@@ -2,6 +2,7 @@
 
 #include <cstdint>
 
+// the reading is a mask of buttons that are held.
 class Reading
 {
     public:

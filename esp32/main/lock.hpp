@@ -2,6 +2,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
 
+// a lock is a RAII wrapper for a semaphore.
 class Lock
 {
     public:
