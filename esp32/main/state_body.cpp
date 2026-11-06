@@ -8,6 +8,7 @@ static const char *JsonBool(bool value)
     return value ? "true" : "false";
 }
 
+// write the state body to the destination buffer.
 int WriteStateBody(char *dst, size_t size, uint8_t mask, bool fresh)
 {
     return snprintf(
