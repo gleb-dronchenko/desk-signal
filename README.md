@@ -1,14 +1,14 @@
 # desk-signal
 
-Учебный проект на C++ для контроллера ESP32 (ESP-IDF).
+A learning project in C++ for the ESP32 controller (ESP-IDF).
 
-Прошивка читает четыре кнопки и отдаёт их состояние по `GET /state` на порту 80:
+The firmware reads four buttons and serves their state at `GET /state` on port 80:
 
 ```json
 {"forward":false,"back":false,"left":false,"right":false,"fresh":false}
 ```
 
-`fresh` истинен, пока чтение кнопок не старше 500 мс. Кнопки с подтяжкой к питанию, нажатие замыкает на землю. Светодиод горит, пока зажата хотя бы одна.
+`fresh` is true while the button reading is under 500 ms old. The buttons are pulled up, and a press shorts the pin to ground. The LED is lit while any button is held.
 
 | | GPIO |
 | --- | --- |
@@ -16,15 +16,15 @@
 | back | 17 |
 | left | 18 |
 | right | 19 |
-| светодиод | 2 |
+| LED | 2 |
 
-Сеть не коммитится. Скопируйте пример и впишите `wifi_ssid` и `wifi_password`:
+The network credentials stay out of the commit. Copy the example and fill in `wifi_ssid` and `wifi_password`:
 
 ```bash
 cp esp32/main/wifi_secret.h.example esp32/main/wifi_secret.h
 ```
 
-Сборка и прошивка из каталога `esp32`. Цель сборки — `esp32`:
+Build and flash from the `esp32` directory. The build target is `esp32`:
 
 ```bash
 cd esp32
@@ -32,9 +32,9 @@ idf.py set-target esp32
 idf.py build flash monitor
 ```
 
-Адрес для запроса пишется в лог после получения IP.
+The address to request is printed in the log after the board gets an IP.
 
-Тесты с корня репозитория. Успех — строка `Test passed` и код выхода 0:
+Run the tests from the repository root. Success is the line `Test passed` and exit code 0:
 
 ```bash
 esp32/tests/test.sh
