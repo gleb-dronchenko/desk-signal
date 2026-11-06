@@ -12,12 +12,12 @@ class Reading
 
         Reading() = default;
 
-        void Accept(uint8_t mask, int64_t now_us);
-        void Expire(int64_t now_us);
+        void Accept(uint8_t mask, int64_t now_micros);
+        void Expire(int64_t now_micros);
         void Copy(uint8_t *mask, bool *fresh) const;
 
     private:
         uint8_t mask_ = 0;
         bool fresh_ = false;
-        int64_t accepted_us_ = 0;
+        int64_t accepted_micros_ = 0;
 };

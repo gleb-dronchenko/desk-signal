@@ -1,18 +1,18 @@
 #include "reading.hpp"
 
-void Reading::Accept(uint8_t mask, int64_t now_us)
+void Reading::Accept(uint8_t mask, int64_t now_micros)
 {
     mask_ = mask;
     fresh_ = true;
-    accepted_us_ = now_us;
+    accepted_micros_ = now_micros;
 }
 
-void Reading::Expire(int64_t now_us)
+void Reading::Expire(int64_t now_micros)
 {
     if (!fresh_)
         return;
 
-    if (now_us - accepted_us_ >= 500000)
+    if (now_micros - accepted_micros_ >= 500000)
         fresh_ = false;
 }
 
